@@ -2,6 +2,7 @@ interface TopBarProps {
   sampleCount: number;
   domain: number;
   hbar: number;
+  onOpenHelp: () => void;
 }
 
 function StatusChip({
@@ -25,6 +26,7 @@ export function TopBar({
   sampleCount,
   domain,
   hbar,
+  onOpenHelp,
 }: TopBarProps) {
   return (
     <header className="relative overflow-hidden rounded-[32px] border border-white/10 bg-white/6 px-6 py-6 shadow-panel backdrop-blur-xl">
@@ -42,6 +44,24 @@ export function TopBar({
             life appear instantly in momentum space. The instrument is tuned
             for Fourier duality, uncertainty, and visual intuition.
           </p>
+
+          <div className="mt-5 flex flex-wrap gap-3">
+            <button
+              type="button"
+              onClick={onOpenHelp}
+              className="rounded-full border border-amber/25 bg-amber/10 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.24em] text-amber transition hover:bg-amber/16"
+            >
+              Open manual
+            </button>
+            <a
+              href="https://supashbhat.github.io"
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-full border border-white/10 bg-black/18 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.24em] text-mist transition hover:text-ink"
+            >
+              Supash Bhat portfolio
+            </a>
+          </div>
         </div>
 
         <div className="flex flex-wrap gap-3 lg:max-w-md lg:justify-end">

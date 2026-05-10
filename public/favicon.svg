@@ -1,0 +1,34 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="256" height="256" rx="64" fill="#070B14"/>
+  <g opacity="0.4">
+    <circle cx="128" cy="128" r="88" stroke="url(#glow)" stroke-width="1.5"/>
+    <circle cx="128" cy="128" r="58" stroke="url(#glow)" stroke-width="1"/>
+  </g>
+  <g filter="url(#shadow)">
+    <path d="M128 36L180 66L196 126L160 178L96 178L60 126L76 66L128 36Z" stroke="url(#gold)" stroke-width="8" stroke-linejoin="round"/>
+    <path d="M128 36V92M76 66L128 92M180 66L128 92M60 126L128 92M196 126L128 92M96 178L128 92M160 178L128 92" stroke="url(#gold)" stroke-width="6.5" stroke-linecap="round"/>
+    <path d="M96 178L128 220L160 178M60 126L128 220L196 126" stroke="url(#gold)" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="128" cy="92" r="11" fill="#F8D37E"/>
+  </g>
+  <defs>
+    <linearGradient id="gold" x1="56" y1="40" x2="186" y2="208" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF2B6"/>
+      <stop offset="0.32" stop-color="#F8D37E"/>
+      <stop offset="0.72" stop-color="#C78B1D"/>
+      <stop offset="1" stop-color="#FFF0A3"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="40" y1="40" x2="216" y2="216" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#59D7FF"/>
+      <stop offset="1" stop-color="#F8D37E"/>
+    </linearGradient>
+    <filter id="shadow" x="24" y="12" width="208" height="224" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="4"/>
+      <feGaussianBlur stdDeviation="10"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.901961 0 0 0 0 0.705882 0 0 0 0 0.239216 0 0 0 0.32 0"/>
+      <feBlend mode="screen" in2="BackgroundImageFix" result="effect1_dropShadow_0_1"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_1" result="shape"/>
+    </filter>
+  </defs>
+</svg>

@@ -1,16 +1,52 @@
+import { useEffect, useRef, useState } from 'react';
+import { BrandCorner } from '@/components/brand/BrandCorner';
 import { motion } from 'framer-motion';
 import { PresetStrip } from '@/components/controls/PresetStrip';
+import { HelpManual } from '@/components/help/HelpManual';
 import { InstrumentDock } from '@/components/layout/InstrumentDock';
 import { TopBar } from '@/components/layout/TopBar';
+import { IntroSequence } from '@/components/overlays/IntroSequence';
 import { MomentumPanel } from '@/components/panels/MomentumPanel';
 import { PositionPanel } from '@/components/panels/PositionPanel';
 import { useWavefunctionInstrument } from '@/lib/state/useWavefunctionInstrument';
 
 export function AppShell() {
   const instrument = useWavefunctionInstrument();
+  const helpRef = useRef<HTMLDivElement | null>(null);
+  const [showIntro, setShowIntro] = useState(false);
+
+  useEffect(() => {
+    const introSeen = window.localStorage.getItem(
+      'wavefunction-graffiti-intro-seen',
+    );
+
+    if (!introSeen) {
+      setShowIntro(true);
+    }
+  }, []);
+
+  const handleIntroComplete = () => {
+    window.localStorage.setItem(
+      'wavefunction-graffiti-intro-seen',
+      'true',
+    );
+    setShowIntro(false);
+  };
+
+  const openHelp = () => {
+    helpRef.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  };
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-obsidian text-ink">
+      <IntroSequence
+        visible={showIntro}
+        onComplete={handleIntroComplete}
+      />
+      <BrandCorner onReplayIntro={() => setShowIntro(true)} />
       <div className="pointer-events-none absolute inset-0 bg-haze opacity-90" />
       <div className="pointer-events-none absolute left-[-10%] top-[-10%] h-[34rem] w-[34rem] rounded-full bg-cyan/10 blur-[140px]" />
       <div className="pointer-events-none absolute bottom-[-12%] right-[-8%] h-[28rem] w-[28rem] rounded-full bg-coral/10 blur-[150px]" />
@@ -25,6 +61,7 @@ export function AppShell() {
           sampleCount={instrument.parameters.sampleCount}
           domain={instrument.parameters.domain}
           hbar={instrument.parameters.hbar}
+          onOpenHelp={openHelp}
         />
 
         <PresetStrip
@@ -71,6 +108,10 @@ export function AppShell() {
           observables={instrument.observables}
           time={instrument.time}
         />
+
+        <div ref={helpRef}>
+          <HelpManual />
+        </div>
       </motion.main>
     </div>
   );
