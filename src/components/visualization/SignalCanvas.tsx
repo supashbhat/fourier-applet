@@ -261,7 +261,7 @@ export function SignalCanvas({
   return (
     <div
       ref={wrapperRef}
-      className="group relative h-[360px] overflow-hidden rounded-[28px] border border-white/8 bg-black/30"
+      className="group relative h-[380px] overflow-hidden rounded-[28px] border border-white/8 bg-black/30 sm:h-[400px] xl:h-[420px]"
     >
       <canvas
         ref={canvasRef}

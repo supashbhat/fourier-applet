@@ -1,10 +1,12 @@
 import { IcosaShellCanvas } from '@/components/brand/IcosaShellCanvas';
+import { PhysicsHelpButton } from '@/components/help/PhysicsHelp';
 
 interface TopBarProps {
   sampleCount: number;
   domain: number;
   hbar: number;
   onOpenHelp: () => void;
+  onOpenPhysicsHelp: () => void;
 }
 
 function StatusChip({
@@ -29,6 +31,7 @@ export function TopBar({
   domain,
   hbar,
   onOpenHelp,
+  onOpenPhysicsHelp,
 }: TopBarProps) {
   return (
     <header className="relative overflow-hidden rounded-[32px] border border-white/10 bg-white/[0.055] px-6 py-6 shadow-panel backdrop-blur-xl">
@@ -75,6 +78,10 @@ export function TopBar({
           </div>
 
           <div className="flex flex-wrap gap-3 lg:max-w-xl lg:justify-end">
+            <PhysicsHelpButton
+              label="Physics help"
+              onClick={onOpenPhysicsHelp}
+            />
             <button
               type="button"
               onClick={onOpenHelp}

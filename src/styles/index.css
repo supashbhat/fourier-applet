@@ -170,7 +170,7 @@ body::after {
 
 .wg-intro__core {
   position: relative;
-  width: min(78vw, 980px);
+  width: min(94vw, 1600px);
   min-height: 320px;
   display: grid;
   place-items: center;
@@ -208,7 +208,8 @@ body::after {
 }
 
 .wg-intro__copy {
-  max-width: min(100%, 760px);
+  width: min(100%, 1320px);
+  max-width: 1320px;
 }
 
 .intro-mark {

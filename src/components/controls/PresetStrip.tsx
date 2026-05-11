@@ -1,15 +1,18 @@
+import { PhysicsHelpButton } from '@/components/help/PhysicsHelp';
 import type { PresetDefinition, PresetId } from '@/types/quantum';
 
 interface PresetStripProps {
   presets: PresetDefinition[];
   activePresetId: PresetId;
   onSelect: (presetId: PresetId) => void;
+  onOpenPhysicsHelp: () => void;
 }
 
 export function PresetStrip({
   presets,
   activePresetId,
   onSelect,
+  onOpenPhysicsHelp,
 }: PresetStripProps) {
   return (
     <section className="mt-6">
@@ -22,6 +25,11 @@ export function PresetStrip({
             Load a prepared state, then tune it like a quantum control sketch.
           </p>
         </div>
+        <PhysicsHelpButton
+          compact
+          label="What these teach"
+          onClick={onOpenPhysicsHelp}
+        />
       </div>
 
       <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">

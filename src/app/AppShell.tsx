@@ -2,6 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { PresetStrip } from '@/components/controls/PresetStrip';
 import { GuidePanel } from '@/components/help/GuidePanel';
+import {
+  PhysicsHelpSheet,
+  type PhysicsHelpTopic,
+} from '@/components/help/PhysicsHelp';
 import { InstrumentDock } from '@/components/layout/InstrumentDock';
 import { TopBar } from '@/components/layout/TopBar';
 import { IntroSequence } from '@/components/overlays/IntroSequence';
@@ -13,6 +17,7 @@ export function AppShell() {
   const instrument = useWavefunctionInstrument();
   const helpRef = useRef<HTMLDivElement | null>(null);
   const [introPhase, setIntroPhase] = useState<'active' | 'done' | null>('active');
+  const [physicsHelpTopic, setPhysicsHelpTopic] = useState<PhysicsHelpTopic | null>(null);
 
   useEffect(() => {
     const doneTimer = window.setTimeout(() => {
@@ -49,6 +54,10 @@ export function AppShell() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-obsidian text-ink">
       <IntroSequence phase={introPhase} />
+      <PhysicsHelpSheet
+        topic={physicsHelpTopic}
+        onClose={() => setPhysicsHelpTopic(null)}
+      />
       <div className="pointer-events-none absolute inset-0 bg-haze opacity-90" />
       <div className="pointer-events-none absolute left-[-10%] top-[6%] h-[34rem] w-[34rem] rounded-full bg-coral/10 blur-[140px]" />
       <div className="pointer-events-none absolute bottom-[-12%] right-[-8%] h-[28rem] w-[28rem] rounded-full bg-amber/10 blur-[150px]" />
@@ -64,12 +73,14 @@ export function AppShell() {
           domain={instrument.parameters.domain}
           hbar={instrument.parameters.hbar}
           onOpenHelp={openHelp}
+          onOpenPhysicsHelp={() => setPhysicsHelpTopic('overview')}
         />
 
         <PresetStrip
           presets={instrument.presets}
           activePresetId={instrument.presetId}
           onSelect={instrument.loadPreset}
+          onOpenPhysicsHelp={() => setPhysicsHelpTopic('presets')}
         />
 
         <section className="mt-6 grid gap-6 xl:grid-cols-[1.18fr_0.82fr]">
@@ -79,9 +90,13 @@ export function AppShell() {
             phase={instrument.positionPhase}
             drawMode={instrument.drawMode}
             onPaint={instrument.paintWavefunction}
+            onOpenPhysicsHelp={() => setPhysicsHelpTopic('position-space')}
           />
 
-          <MomentumPanel momentum={instrument.momentum} />
+          <MomentumPanel
+            momentum={instrument.momentum}
+            onOpenPhysicsHelp={() => setPhysicsHelpTopic('momentum-space')}
+          />
         </section>
 
         <InstrumentDock
@@ -109,6 +124,7 @@ export function AppShell() {
           onOverlayConceptChange={instrument.setOverlayConcept}
           observables={instrument.observables}
           time={instrument.time}
+          onOpenPhysicsHelp={setPhysicsHelpTopic}
         />
 
         <div ref={helpRef}>

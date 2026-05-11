@@ -1,18 +1,24 @@
 import { PanelFrame } from '@/components/panels/PanelFrame';
+import { PanelLegendCard } from '@/components/panels/PanelLegendCard';
 import { SignalCanvas } from '@/components/visualization/SignalCanvas';
 import type { MomentumWavefunction } from '@/types/quantum';
 
 interface MomentumPanelProps {
   momentum: MomentumWavefunction;
+  onOpenPhysicsHelp: () => void;
 }
 
-export function MomentumPanel({ momentum }: MomentumPanelProps) {
+export function MomentumPanel({
+  momentum,
+  onOpenPhysicsHelp,
+}: MomentumPanelProps) {
   return (
     <PanelFrame
       eyebrow="Momentum Space"
       title="Read the reciprocal answer"
-      description="This is the live Fourier partner of the drawing surface. As the position-space state tightens, the control-room view here broadens and brightens."
+      description="This panel is the live Fourier partner of your drawing. When the position-space packet tightens, the momentum-space response usually spreads."
       badge="Live FFT"
+      onOpenPhysicsHelp={onOpenPhysicsHelp}
     >
       <SignalCanvas
         fillData={momentum.density}
@@ -33,16 +39,19 @@ export function MomentumPanel({ momentum }: MomentumPanelProps) {
         ]}
       />
 
-      <div className="mt-4 flex flex-wrap gap-3 text-sm text-mist">
-        <div className="rounded-full border border-white/10 bg-[#0a121d]/74 px-4 py-2">
-          Fourier amplitude in blush and amber
-        </div>
-        <div className="rounded-full border border-white/10 bg-[#0a121d]/74 px-4 py-2">
-          Spectral density fill in blush
-        </div>
-        <div className="rounded-full border border-white/10 bg-[#0a121d]/74 px-4 py-2">
-          Reciprocal broadening is the key lesson
-        </div>
+      <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+        <PanelLegendCard
+          label="Complex spectrum"
+          body="Blush and amber traces show the real and imaginary momentum amplitudes."
+        />
+        <PanelLegendCard
+          label="Momentum density"
+          body="The glow underneath tracks |phi(p)|^2, the probability distribution for momentum."
+        />
+        <PanelLegendCard
+          label="Key lesson"
+          body="Sharper localization in x typically demands broader support in p."
+        />
       </div>
     </PanelFrame>
   );

@@ -1,4 +1,5 @@
 import { PanelFrame } from '@/components/panels/PanelFrame';
+import { PanelLegendCard } from '@/components/panels/PanelLegendCard';
 import { SignalCanvas } from '@/components/visualization/SignalCanvas';
 import type { DrawMode, SampledWavefunction } from '@/types/quantum';
 
@@ -8,6 +9,7 @@ interface PositionPanelProps {
   phase: Float64Array;
   drawMode: DrawMode;
   onPaint: (xNorm: number, yNorm: number) => void;
+  onOpenPhysicsHelp: () => void;
 }
 
 export function PositionPanel({
@@ -16,13 +18,15 @@ export function PositionPanel({
   phase,
   drawMode,
   onPaint,
+  onOpenPhysicsHelp,
 }: PositionPanelProps) {
   return (
     <PanelFrame
       eyebrow="Position Space"
       title="Author the state directly"
-      description="Treat the left panel like a quantum signal deck. The real and imaginary traces sit on top of the probability density, and the strip below carries local phase."
+      description="This panel is your sampled wavefunction psi(x). Edit amplitude or phase directly, then read the complex structure and probability density as one object."
       badge={`Editing ${drawMode}`}
+      onOpenPhysicsHelp={onOpenPhysicsHelp}
     >
       <SignalCanvas
         editable
@@ -45,19 +49,15 @@ export function PositionPanel({
         ]}
       />
 
-      <div className="mt-4 flex flex-wrap gap-3 text-sm text-mist">
-        <div className="rounded-full border border-white/10 bg-[#0a121d]/74 px-4 py-2">
-          Real part in pearl
-        </div>
-        <div className="rounded-full border border-white/10 bg-[#0a121d]/74 px-4 py-2">
-          Imaginary part in rose
-        </div>
-        <div className="rounded-full border border-white/10 bg-[#0a121d]/74 px-4 py-2">
-          Density fill in blush
-        </div>
-        <div className="rounded-full border border-white/10 bg-[#0a121d]/74 px-4 py-2">
-          Phase strip below
-        </div>
+      <div className="mt-5 grid gap-3 md:grid-cols-2">
+        <PanelLegendCard
+          label="Real + imaginary"
+          body="Pearl and rose traces show the complex amplitude itself, not just the measurable density."
+        />
+        <PanelLegendCard
+          label="Density + phase"
+          body="The blush fill tracks |psi(x)|^2 while the phase strip shows the local complex angle."
+        />
       </div>
     </PanelFrame>
   );

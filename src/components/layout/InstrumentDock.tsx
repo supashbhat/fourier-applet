@@ -1,3 +1,7 @@
+import {
+  PhysicsHelpButton,
+  type PhysicsHelpTopic,
+} from '@/components/help/PhysicsHelp';
 import { motion } from 'framer-motion';
 import { MetricCard } from '@/components/controls/MetricCard';
 import { SegmentedControl } from '@/components/controls/SegmentedControl';
@@ -29,6 +33,7 @@ interface InstrumentDockProps {
   onOverlayConceptChange: (value: OverlayConcept) => void;
   observables: Observables;
   time: number;
+  onOpenPhysicsHelp: (topic: PhysicsHelpTopic) => void;
 }
 
 export function InstrumentDock({
@@ -47,6 +52,7 @@ export function InstrumentDock({
   onOverlayConceptChange,
   observables,
   time,
+  onOpenPhysicsHelp,
 }: InstrumentDockProps) {
   return (
     <motion.section
@@ -56,12 +62,21 @@ export function InstrumentDock({
       className="mt-6 grid gap-6 xl:grid-cols-[1.1fr_1fr_1.25fr]"
     >
       <div className="rounded-[28px] border border-white/10 bg-white/[0.055] p-5 shadow-panel backdrop-blur-xl">
-        <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-coral/80">
-          Control Deck
-        </p>
-        <h3 className="mt-3 font-display text-2xl tracking-[-0.04em] text-ink">
-          Sculpt the complex field
-        </h3>
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-coral/80">
+              Control Deck
+            </p>
+            <h3 className="mt-3 font-display text-2xl tracking-[-0.04em] text-ink">
+              Sculpt the complex field
+            </h3>
+          </div>
+          <PhysicsHelpButton
+            compact
+            label="Physics note"
+            onClick={() => onOpenPhysicsHelp('drawing-controls')}
+          />
+        </div>
 
         <div className="mt-5">
           <SegmentedControl
@@ -122,12 +137,21 @@ export function InstrumentDock({
       </div>
 
       <div className="rounded-[28px] border border-white/10 bg-white/[0.055] p-5 shadow-panel backdrop-blur-xl">
-        <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-coral/80">
-          Evolution Deck
-        </p>
-        <h3 className="mt-3 font-display text-2xl tracking-[-0.04em] text-ink">
-          Animate the packet
-        </h3>
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-coral/80">
+              Evolution Deck
+            </p>
+            <h3 className="mt-3 font-display text-2xl tracking-[-0.04em] text-ink">
+              Animate the packet
+            </h3>
+          </div>
+          <PhysicsHelpButton
+            compact
+            label="Physics note"
+            onClick={() => onOpenPhysicsHelp('evolution')}
+          />
+        </div>
         <p className="mt-2 text-sm leading-7 text-mist">
           The current scaffold supports stationary viewing or free-particle
           dispersion directly in momentum space.
@@ -173,12 +197,21 @@ export function InstrumentDock({
 
       <div className="space-y-6">
         <div className="rounded-[28px] border border-white/10 bg-white/[0.055] p-5 shadow-panel backdrop-blur-xl">
-          <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-coral/80">
-            Telemetry
-          </p>
-          <h3 className="mt-3 font-display text-2xl tracking-[-0.04em] text-ink">
-            Watch the reciprocal tradeoff
-          </h3>
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-coral/80">
+                Telemetry
+              </p>
+              <h3 className="mt-3 font-display text-2xl tracking-[-0.04em] text-ink">
+                Watch the reciprocal tradeoff
+              </h3>
+            </div>
+            <PhysicsHelpButton
+              compact
+              label="Physics note"
+              onClick={() => onOpenPhysicsHelp('telemetry')}
+            />
+          </div>
 
           <div className="mt-5 grid gap-3 sm:grid-cols-3">
             <MetricCard
