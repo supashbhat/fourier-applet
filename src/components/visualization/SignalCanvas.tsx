@@ -18,6 +18,10 @@ interface SignalCanvasProps {
   onPaint?: (xNorm: number, yNorm: number) => void;
   helperText?: string;
   accent?: string;
+  viewWindow?: {
+    start: number;
+    end: number;
+  };
 }
 
 interface PointerState {
@@ -34,6 +38,33 @@ function toArray(data: NumericSeries | undefined): number[] {
   return Array.from(data);
 }
 
+function clamp(value: number, min: number, max: number): number {
+  return Math.min(Math.max(value, min), max);
+}
+
+function getVisibleRange(
+  length: number,
+  viewWindow?: { start: number; end: number },
+): { start: number; end: number } {
+  if (length <= 1) {
+    return { start: 0, end: 0 };
+  }
+
+  if (!viewWindow) {
+    return { start: 0, end: length - 1 };
+  }
+
+  const startNorm = clamp(viewWindow.start, 0, 0.999);
+  const endNorm = clamp(viewWindow.end, startNorm + 0.001, 1);
+  const start = Math.floor(startNorm * (length - 1));
+  const end = Math.ceil(endNorm * (length - 1));
+
+  return {
+    start,
+    end: Math.max(start + 1, Math.min(length - 1, end)),
+  };
+}
+
 export function SignalCanvas({
   fillData,
   phaseData,
@@ -42,6 +73,7 @@ export function SignalCanvas({
   onPaint,
   helperText,
   accent = '#ff9b92',
+  viewWindow,
 }: SignalCanvasProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -143,18 +175,21 @@ export function SignalCanvas({
       const area = context.createLinearGradient(0, topInset, 0, densityBaseline);
       area.addColorStop(0, 'rgba(255, 194, 182, 0.24)');
       area.addColorStop(1, 'rgba(255, 194, 182, 0.03)');
+      const fillRange = getVisibleRange(fill.length, viewWindow);
 
       context.beginPath();
       context.moveTo(paddingX, densityBaseline);
 
-      fill.forEach((value, index) => {
+      for (let index = fillRange.start; index <= fillRange.end; index += 1) {
+        const value = fill[index];
         const x =
           paddingX +
-          (index / Math.max(fill.length - 1, 1)) *
+          ((index - fillRange.start) /
+            Math.max(fillRange.end - fillRange.start, 1)) *
             (width - paddingX * 2);
         const y = densityBaseline - value * fillScale;
         context.lineTo(x, y);
-      });
+      }
 
       context.lineTo(width - paddingX, densityBaseline);
       context.closePath();
@@ -175,20 +210,23 @@ export function SignalCanvas({
         return;
       }
 
+      const seriesRange = getVisibleRange(values.length, viewWindow);
       context.beginPath();
-      values.forEach((value, index) => {
+      for (let index = seriesRange.start; index <= seriesRange.end; index += 1) {
+        const value = values[index];
         const x =
           paddingX +
-          (index / Math.max(values.length - 1, 1)) *
+          ((index - seriesRange.start) /
+            Math.max(seriesRange.end - seriesRange.start, 1)) *
             (width - paddingX * 2);
         const y = centerY - value * lineScale;
 
-        if (index === 0) {
+        if (index === seriesRange.start) {
           context.moveTo(x, y);
         } else {
           context.lineTo(x, y);
         }
-      });
+      }
 
       context.strokeStyle = entry.color;
       context.globalAlpha = entry.opacity ?? 1;
@@ -203,17 +241,21 @@ export function SignalCanvas({
     if (phases.length > 0) {
       const stripTop = height - 13;
       const stripHeight = 6;
-      const stripWidth = (width - paddingX * 2) / phases.length;
+      const phaseRange = getVisibleRange(phases.length, viewWindow);
+      const stripWidth =
+        (width - paddingX * 2) /
+        Math.max(phaseRange.end - phaseRange.start + 1, 1);
 
-      phases.forEach((value, index) => {
+      for (let index = phaseRange.start; index <= phaseRange.end; index += 1) {
+        const value = phases[index];
         context.fillStyle = phaseToColor(value, 0.92);
         context.fillRect(
-          paddingX + index * stripWidth,
+          paddingX + (index - phaseRange.start) * stripWidth,
           stripTop,
           Math.ceil(stripWidth) + 1,
           stripHeight,
         );
-      });
+      }
     }
 
     if (pointer) {
@@ -234,7 +276,7 @@ export function SignalCanvas({
       context.fill();
       context.shadowBlur = 0;
     }
-  }, [accent, fill, lines, phaseData, phases, pointer, series, size]);
+  }, [accent, fill, lines, phaseData, phases, pointer, series, size, viewWindow]);
 
   const updatePointer = (
     clientX: number,
