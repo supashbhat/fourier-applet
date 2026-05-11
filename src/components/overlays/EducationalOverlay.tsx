@@ -38,7 +38,7 @@ export function EducationalOverlay({
 
   return (
     <div className="rounded-[28px] border border-white/10 bg-white/6 p-5 shadow-panel backdrop-blur-xl">
-      <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-cyan/80">
+      <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-coral/80">
         {content.eyebrow}
       </p>
       <h3 className="mt-3 font-display text-2xl text-ink">

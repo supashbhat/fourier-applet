@@ -55,12 +55,12 @@ export function InstrumentDock({
       transition={{ duration: 0.55, delay: 0.1 }}
       className="mt-6 grid gap-6 xl:grid-cols-[1.1fr_1fr_1.25fr]"
     >
-      <div className="rounded-[28px] border border-white/10 bg-white/6 p-5 shadow-panel backdrop-blur-xl">
-        <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-cyan/80">
-          Authoring
+      <div className="rounded-[28px] border border-white/10 bg-white/[0.055] p-5 shadow-panel backdrop-blur-xl">
+        <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-coral/80">
+          Control Deck
         </p>
-        <h3 className="mt-3 font-display text-2xl text-ink">
-          Brush the complex field
+        <h3 className="mt-3 font-display text-2xl tracking-[-0.04em] text-ink">
+          Sculpt the complex field
         </h3>
 
         <div className="mt-5">
@@ -93,7 +93,7 @@ export function InstrumentDock({
               onChange={(event) =>
                 onBrushRadiusChange(Number(event.target.value))
               }
-              className="w-full accent-cyan"
+              className="w-full accent-coral"
             />
           </label>
 
@@ -115,18 +115,18 @@ export function InstrumentDock({
               onChange={(event) =>
                 onBrushStrengthChange(Number(event.target.value))
               }
-              className="w-full accent-coral"
+              className="w-full accent-amber"
             />
           </label>
         </div>
       </div>
 
-      <div className="rounded-[28px] border border-white/10 bg-white/6 p-5 shadow-panel backdrop-blur-xl">
-        <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-cyan/80">
-          Evolution
+      <div className="rounded-[28px] border border-white/10 bg-white/[0.055] p-5 shadow-panel backdrop-blur-xl">
+        <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-coral/80">
+          Evolution Deck
         </p>
-        <h3 className="mt-3 font-display text-2xl text-ink">
-          Animate the state
+        <h3 className="mt-3 font-display text-2xl tracking-[-0.04em] text-ink">
+          Animate the packet
         </h3>
         <p className="mt-2 text-sm leading-7 text-mist">
           The current scaffold supports stationary viewing or free-particle
@@ -148,20 +148,20 @@ export function InstrumentDock({
           <button
             type="button"
             onClick={onTogglePlayback}
-            className="rounded-full border border-cyan/25 bg-cyan/12 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.22em] text-cyan transition hover:bg-cyan/18"
+            className="rounded-full border border-coral/25 bg-coral/10 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.22em] text-coral transition hover:bg-coral/18"
           >
             {isPlaying ? 'Pause evolution' : 'Play evolution'}
           </button>
           <button
             type="button"
             onClick={onResetTime}
-            className="rounded-full border border-white/10 bg-black/20 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.22em] text-mist transition hover:text-ink"
+            className="rounded-full border border-white/10 bg-[#0a121d]/76 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.22em] text-mist transition hover:text-ink"
           >
             Reset time
           </button>
         </div>
 
-        <div className="mt-6 rounded-2xl border border-white/8 bg-black/20 px-4 py-4">
+        <div className="mt-6 rounded-2xl border border-white/10 bg-[#0a121d]/76 px-4 py-4">
           <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-mist">
             Current time
           </p>
@@ -172,11 +172,11 @@ export function InstrumentDock({
       </div>
 
       <div className="space-y-6">
-        <div className="rounded-[28px] border border-white/10 bg-white/6 p-5 shadow-panel backdrop-blur-xl">
-          <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-cyan/80">
-            Uncertainty Instrument
+        <div className="rounded-[28px] border border-white/10 bg-white/[0.055] p-5 shadow-panel backdrop-blur-xl">
+          <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-coral/80">
+            Telemetry
           </p>
-          <h3 className="mt-3 font-display text-2xl text-ink">
+          <h3 className="mt-3 font-display text-2xl tracking-[-0.04em] text-ink">
             Watch the reciprocal tradeoff
           </h3>
 
@@ -201,7 +201,7 @@ export function InstrumentDock({
             <MetricCard
               label="Normalization"
               value={formatMetric(observables.norm)}
-              accent="text-teal"
+              accent="text-blush"
             />
             <MetricCard
               label="Mean x"

@@ -15,11 +15,11 @@ export function PresetStrip({
     <section className="mt-6">
       <div className="mb-3 flex items-center justify-between">
         <div>
-          <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-mist/80">
-            Preset States
+          <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-coral/80">
+            Signal Library
           </p>
           <p className="mt-1 text-sm text-mist">
-            Start from a clean quantum gesture, then paint over it.
+            Load a prepared state, then tune it like a quantum control sketch.
           </p>
         </div>
       </div>
@@ -34,10 +34,10 @@ export function PresetStrip({
               type="button"
               onClick={() => onSelect(preset.id)}
               className={[
-                'rounded-3xl border px-4 py-4 text-left transition duration-300',
+                'rounded-[26px] border px-4 py-4 text-left transition duration-300',
                 active
-                  ? 'border-cyan/50 bg-cyan/10 shadow-glow'
-                  : 'border-white/8 bg-white/5 hover:border-white/20 hover:bg-white/8',
+                  ? 'border-coral/40 bg-[linear-gradient(135deg,rgba(255,111,127,0.12),rgba(255,194,182,0.06))] shadow-[0_0_24px_rgba(255,111,127,0.12)]'
+                  : 'border-white/10 bg-white/[0.055] hover:border-white/20 hover:bg-white/[0.08]',
               ].join(' ')}
             >
               <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-mist">

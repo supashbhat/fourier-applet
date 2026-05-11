@@ -20,8 +20,8 @@ export function PositionPanel({
   return (
     <PanelFrame
       eyebrow="Position Space"
-      title="Draw the state directly"
-      description="The real and imaginary components ride on top of the probability density, while the spectral strip below encodes the local complex phase."
+      title="Author the state directly"
+      description="Treat the left panel like a quantum signal deck. The real and imaginary traces sit on top of the probability density, and the strip below carries local phase."
       badge={`Editing ${drawMode}`}
     >
       <SignalCanvas
@@ -33,12 +33,12 @@ export function PositionPanel({
         series={[
           {
             data: wavefunction.re,
-            color: '#58d6ff',
+            color: '#fff4f1',
             width: 2.4,
           },
           {
             data: wavefunction.im,
-            color: '#ff7f9f',
+            color: '#ff9b92',
             width: 1.8,
             opacity: 0.86,
           },
@@ -46,16 +46,16 @@ export function PositionPanel({
       />
 
       <div className="mt-4 flex flex-wrap gap-3 text-sm text-mist">
-        <div className="rounded-full border border-white/8 bg-white/5 px-4 py-2">
-          Real part in cyan
+        <div className="rounded-full border border-white/10 bg-[#0a121d]/74 px-4 py-2">
+          Real part in pearl
         </div>
-        <div className="rounded-full border border-white/8 bg-white/5 px-4 py-2">
-          Imaginary part in coral
+        <div className="rounded-full border border-white/10 bg-[#0a121d]/74 px-4 py-2">
+          Imaginary part in rose
         </div>
-        <div className="rounded-full border border-white/8 bg-white/5 px-4 py-2">
-          Density fill in teal
+        <div className="rounded-full border border-white/10 bg-[#0a121d]/74 px-4 py-2">
+          Density fill in blush
         </div>
-        <div className="rounded-full border border-white/8 bg-white/5 px-4 py-2">
+        <div className="rounded-full border border-white/10 bg-[#0a121d]/74 px-4 py-2">
           Phase strip below
         </div>
       </div>

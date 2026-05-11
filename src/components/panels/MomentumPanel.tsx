@@ -10,9 +10,9 @@ export function MomentumPanel({ momentum }: MomentumPanelProps) {
   return (
     <PanelFrame
       eyebrow="Momentum Space"
-      title="Reciprocal structure appears immediately"
-      description="This panel is the live Fourier partner of the drawing surface. When the wavefunction tightens in position space, the spectrum spreads out here."
-      badge="FFT view"
+      title="Read the reciprocal answer"
+      description="This is the live Fourier partner of the drawing surface. As the position-space state tightens, the control-room view here broadens and brightens."
+      badge="Live FFT"
     >
       <SignalCanvas
         fillData={momentum.density}
@@ -21,12 +21,12 @@ export function MomentumPanel({ momentum }: MomentumPanelProps) {
         series={[
           {
             data: momentum.re,
-            color: '#58d6ff',
+            color: '#ffc2b6',
             width: 2.2,
           },
           {
             data: momentum.im,
-            color: '#f7c66c',
+            color: '#f2d198',
             width: 1.7,
             opacity: 0.86,
           },
@@ -34,13 +34,13 @@ export function MomentumPanel({ momentum }: MomentumPanelProps) {
       />
 
       <div className="mt-4 flex flex-wrap gap-3 text-sm text-mist">
-        <div className="rounded-full border border-white/8 bg-white/5 px-4 py-2">
-          Fourier amplitude in cyan and amber
+        <div className="rounded-full border border-white/10 bg-[#0a121d]/74 px-4 py-2">
+          Fourier amplitude in blush and amber
         </div>
-        <div className="rounded-full border border-white/8 bg-white/5 px-4 py-2">
-          Spectral density fill in teal
+        <div className="rounded-full border border-white/10 bg-[#0a121d]/74 px-4 py-2">
+          Spectral density fill in blush
         </div>
-        <div className="rounded-full border border-white/8 bg-white/5 px-4 py-2">
+        <div className="rounded-full border border-white/10 bg-[#0a121d]/74 px-4 py-2">
           Reciprocal broadening is the key lesson
         </div>
       </div>

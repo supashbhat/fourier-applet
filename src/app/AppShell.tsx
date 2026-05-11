@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { BrandCorner } from '@/components/brand/BrandCorner';
 import { motion } from 'framer-motion';
 import { PresetStrip } from '@/components/controls/PresetStrip';
-import { HelpManual } from '@/components/help/HelpManual';
+import { GuidePanel } from '@/components/help/GuidePanel';
 import { InstrumentDock } from '@/components/layout/InstrumentDock';
 import { TopBar } from '@/components/layout/TopBar';
 import { IntroSequence } from '@/components/overlays/IntroSequence';
@@ -13,25 +12,32 @@ import { useWavefunctionInstrument } from '@/lib/state/useWavefunctionInstrument
 export function AppShell() {
   const instrument = useWavefunctionInstrument();
   const helpRef = useRef<HTMLDivElement | null>(null);
-  const [showIntro, setShowIntro] = useState(false);
+  const [introPhase, setIntroPhase] = useState<'active' | 'done' | null>('active');
 
   useEffect(() => {
-    const introSeen = window.localStorage.getItem(
-      'wavefunction-graffiti-intro-seen',
-    );
+    const doneTimer = window.setTimeout(() => {
+      setIntroPhase('done');
+    }, 2600);
+    const clearTimer = window.setTimeout(() => {
+      setIntroPhase(null);
+    }, 3020);
 
-    if (!introSeen) {
-      setShowIntro(true);
-    }
+    return () => {
+      window.clearTimeout(doneTimer);
+      window.clearTimeout(clearTimer);
+    };
   }, []);
 
-  const handleIntroComplete = () => {
-    window.localStorage.setItem(
-      'wavefunction-graffiti-intro-seen',
-      'true',
+  useEffect(() => {
+    document.body.classList.toggle(
+      'wg-intro-visible',
+      introPhase !== null,
     );
-    setShowIntro(false);
-  };
+
+    return () => {
+      document.body.classList.remove('wg-intro-visible');
+    };
+  }, [introPhase]);
 
   const openHelp = () => {
     helpRef.current?.scrollIntoView({
@@ -42,14 +48,10 @@ export function AppShell() {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-obsidian text-ink">
-      <IntroSequence
-        visible={showIntro}
-        onComplete={handleIntroComplete}
-      />
-      <BrandCorner onReplayIntro={() => setShowIntro(true)} />
+      <IntroSequence phase={introPhase} />
       <div className="pointer-events-none absolute inset-0 bg-haze opacity-90" />
-      <div className="pointer-events-none absolute left-[-10%] top-[-10%] h-[34rem] w-[34rem] rounded-full bg-cyan/10 blur-[140px]" />
-      <div className="pointer-events-none absolute bottom-[-12%] right-[-8%] h-[28rem] w-[28rem] rounded-full bg-coral/10 blur-[150px]" />
+      <div className="pointer-events-none absolute left-[-10%] top-[6%] h-[34rem] w-[34rem] rounded-full bg-coral/10 blur-[140px]" />
+      <div className="pointer-events-none absolute bottom-[-12%] right-[-8%] h-[28rem] w-[28rem] rounded-full bg-amber/10 blur-[150px]" />
 
       <motion.main
         initial={{ opacity: 0 }}
@@ -110,7 +112,7 @@ export function AppShell() {
         />
 
         <div ref={helpRef}>
-          <HelpManual />
+          <GuidePanel />
         </div>
       </motion.main>
     </div>

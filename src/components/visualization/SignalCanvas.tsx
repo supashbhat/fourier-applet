@@ -41,7 +41,7 @@ export function SignalCanvas({
   editable = false,
   onPaint,
   helperText,
-  accent = '#58d6ff',
+  accent = '#ff9b92',
 }: SignalCanvasProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -106,12 +106,12 @@ export function SignalCanvas({
     context.clearRect(0, 0, width, height);
 
     const background = context.createLinearGradient(0, 0, width, height);
-    background.addColorStop(0, 'rgba(10, 21, 37, 0.96)');
-    background.addColorStop(1, 'rgba(6, 10, 17, 0.98)');
+    background.addColorStop(0, 'rgba(10, 18, 29, 0.96)');
+    background.addColorStop(1, 'rgba(5, 11, 20, 0.98)');
     context.fillStyle = background;
     context.fillRect(0, 0, width, height);
 
-    context.strokeStyle = 'rgba(154, 179, 200, 0.14)';
+    context.strokeStyle = 'rgba(194, 178, 179, 0.12)';
     context.lineWidth = 1;
 
     for (let grid = 0; grid <= 6; grid += 1) {
@@ -131,7 +131,7 @@ export function SignalCanvas({
       context.stroke();
     }
 
-    context.strokeStyle = 'rgba(234, 247, 255, 0.22)';
+    context.strokeStyle = 'rgba(237, 246, 255, 0.2)';
     context.beginPath();
     context.moveTo(paddingX, centerY);
     context.lineTo(width - paddingX, centerY);
@@ -141,8 +141,8 @@ export function SignalCanvas({
       const maxFill = Math.max(...fill, 1e-6);
       const fillScale = plotHeight * 0.34 / maxFill;
       const area = context.createLinearGradient(0, topInset, 0, densityBaseline);
-      area.addColorStop(0, 'rgba(62, 230, 198, 0.22)');
-      area.addColorStop(1, 'rgba(62, 230, 198, 0.03)');
+      area.addColorStop(0, 'rgba(255, 194, 182, 0.24)');
+      area.addColorStop(1, 'rgba(255, 194, 182, 0.03)');
 
       context.beginPath();
       context.moveTo(paddingX, densityBaseline);
@@ -220,7 +220,7 @@ export function SignalCanvas({
       const cursorX = paddingX + pointer.x * (width - paddingX * 2);
       const cursorY = topInset + pointer.y * plotHeight;
 
-      context.strokeStyle = 'rgba(88, 214, 255, 0.48)';
+      context.strokeStyle = 'rgba(255, 155, 146, 0.48)';
       context.beginPath();
       context.moveTo(cursorX, topInset);
       context.lineTo(cursorX, topInset + plotHeight);
@@ -301,7 +301,7 @@ export function SignalCanvas({
 
       {editable ? (
         <div className="pointer-events-none absolute inset-x-0 bottom-4 flex justify-center">
-          <div className="rounded-full border border-cyan/20 bg-black/25 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.24em] text-cyan/90">
+          <div className="rounded-full border border-coral/20 bg-black/25 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.24em] text-coral/90">
             Drag directly on the field to sculpt the state
           </div>
         </div>

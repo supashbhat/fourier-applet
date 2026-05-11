@@ -6,9 +6,9 @@ export function phaseToColor(phase: number, alpha = 0.9): string {
 }
 
 export const instrumentPalette = {
-  cyan: '#58d6ff',
-  teal: '#3ee6c6',
-  amber: '#f7c66c',
-  coral: '#ff7f9f',
-  mist: '#9ab3c8',
+  pearl: '#fff4f1',
+  coral: '#ff9b92',
+  blush: '#ffc2b6',
+  amber: '#f2d198',
+  mist: '#c2b2b3',
 };

@@ -5,15 +5,16 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        obsidian: '#060b14',
-        graphite: '#0d1727',
-        frost: 'rgba(214, 237, 255, 0.16)',
-        cyan: '#58d6ff',
-        teal: '#3ee6c6',
-        amber: '#f7c66c',
-        coral: '#ff7f9f',
-        ink: '#eaf7ff',
-        mist: '#9ab3c8',
+        obsidian: '#050b14',
+        graphite: '#0b1524',
+        panel: '#0a121d',
+        ruby: '#ff6f7f',
+        coral: '#ff9b92',
+        blush: '#ffc2b6',
+        amber: '#f2d198',
+        ink: '#edf6ff',
+        mist: '#c2b2b3',
+        faint: '#8e7779',
       },
       fontFamily: {
         display: ['"Space Grotesk"', 'sans-serif'],
@@ -26,7 +27,7 @@ const config: Config = {
       },
       backgroundImage: {
         haze:
-          'radial-gradient(circle at top left, rgba(88, 214, 255, 0.16), transparent 38%), radial-gradient(circle at top right, rgba(255, 127, 159, 0.1), transparent 26%), radial-gradient(circle at bottom center, rgba(62, 230, 198, 0.1), transparent 36%)',
+          'radial-gradient(circle at top left, rgba(255, 111, 127, 0.16), transparent 38%), radial-gradient(circle at top right, rgba(255, 194, 182, 0.1), transparent 26%), radial-gradient(circle at bottom center, rgba(242, 209, 152, 0.1), transparent 36%)',
       },
     },
   },

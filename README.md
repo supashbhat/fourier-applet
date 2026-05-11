@@ -1,55 +1,97 @@
 # Wavefunction Graffiti
 
-Wavefunction Graffiti is a static React + TypeScript quantum mechanics applet focused on drawing a complex wavefunction and building intuition for Fourier duality, momentum-space structure, and uncertainty.
+Wavefunction Graffiti is a browser-based quantum mechanics applet for drawing a complex wavefunction by hand and immediately seeing how that choice propagates through position space, momentum space, phase, and uncertainty.
 
-## Current Scaffold
+The project is built as a fully static React + TypeScript site with no backend. Everything runs client-side in the browser.
 
-- Vite + React + TypeScript + Tailwind foundation
-- Canvas-based scientific visualization shell
-- Preset quantum states
-- Live position-space and momentum-space panels
-- Numerical normalization, FFT, and uncertainty metrics
-- Free-particle evolution scaffold
-- Design system and documentation for the next implementation phases
+## What It Does
 
-## Commands
+- lets the user draw a complex-valued state directly in position space
+- normalizes the state continuously
+- computes a live Fourier transform into momentum space
+- displays real part, imaginary part, density, and phase structure
+- reports live uncertainty metrics such as `Δx`, `Δp`, and `ΔxΔp`
+- supports preset states for guided exploration
+- includes a built-in help/manual section for first-time users
+
+This is not meant to be a general-purpose Schrödinger solver. The app is designed as a visual instrument for Fourier duality and quantum intuition.
+
+## Getting Started
+
+### Requirements
+
+- Node.js
+- npm
+
+### Install and Run
 
 ```bash
 npm install
-npm run typecheck
 npm run dev
-npm run build
 ```
 
-## GitHub Pages
+The dev server will print a local URL such as `http://127.0.0.1:4173/`.
 
-This standalone repo is intended to publish as a project site.
+### Useful Commands
 
-Recommended repository name:
+```bash
+npm run typecheck
+npm run build
+npm run preview
+```
 
-`fourier-applet`
+## How To Use The App
 
-With that repository name, GitHub Pages will publish at:
+1. Load a preset from the signal library or start drawing immediately.
+2. Use the position-space panel to paint amplitude or phase.
+3. Watch the momentum-space panel update live from the FFT.
+4. Read the uncertainty cards to compare the visual tradeoff against the numerical one.
+5. Use the guided manual section near the bottom of the page for feature explanations and suggested exploration paths.
 
-`https://supashbhat.github.io/fourier-applet/`
+## Tech Stack
 
-Setup:
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS
+- Framer Motion
+- Canvas-based rendering
+- in-browser FFT and observable calculations
 
-- create a new GitHub repo, ideally `supashbhat/fourier-applet`
-- push this folder as that repo's root
-- in GitHub, open `Settings -> Pages`
-- set `Source` to `GitHub Actions`
-- push to `main`
+## Repository Layout
 
-The workflow at `.github/workflows/deploy.yml` will build and publish the site automatically.
+- `src/app/`
+  App composition and the top-level shell.
+- `src/components/`
+  UI panels, controls, overlays, branding, and visualization components.
+- `src/lib/math/`
+  FFT logic, wavefunction presets, evolution code, and observable calculations.
+- `src/lib/state/`
+  The main interaction/state hook that connects drawing, normalization, transforms, and UI state.
+- `src/lib/rendering/`
+  Rendering helpers such as phase coloring.
+- `src/styles/`
+  Global styling and shared visual system rules.
+- `public/`
+  Static assets such as the site icon.
+- `docs/`
+  Architecture notes, roadmap, visual direction, and physics assumptions.
 
-The Vite config uses a relative base (`./`), so the static build is safe for GitHub Pages subdirectory hosting.
+## Physics Scope
 
-## Key Paths
+The app aims to be pedagogically correct without pretending to be a research-grade simulation environment.
 
-- `src/app/`: app shell and composition
-- `src/components/`: UI, panel, and visualization components
-- `src/lib/math/`: numerical wavefunction logic, FFT, observables, presets
-- `src/lib/state/`: interaction and simulation state
-- `src/styles/`: global styling
-- `docs/`: architecture, roadmap, design, physics, and deployment notes
+- wavefunctions are sampled on a finite grid
+- normalization is enforced numerically
+- momentum space is obtained through a discrete FFT convention chosen for intuition and stable visuals
+- uncertainty values are computed from sampled observables
+- the current evolution support focuses on the educational cases implemented in the UI
+
+For the exact assumptions used in the current build, see [docs/physics-assumptions.md](docs/physics-assumptions.md).
+
+## Additional Docs
+
+- [Architecture](docs/architecture.md)
+- [Physics Assumptions](docs/physics-assumptions.md)
+- [Visual Design Spec](docs/visual-design-spec.md)
+- [Roadmap](docs/roadmap.md)
