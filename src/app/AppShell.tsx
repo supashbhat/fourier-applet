@@ -95,6 +95,8 @@ export function AppShell() {
 
           <MomentumPanel
             momentum={instrument.momentum}
+            wavefunction={instrument.displayState}
+            parameters={instrument.parameters}
             onOpenPhysicsHelp={() => setPhysicsHelpTopic('momentum-space')}
           />
         </section>

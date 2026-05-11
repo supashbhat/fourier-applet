@@ -119,6 +119,62 @@ export function forwardMomentumTransform(
   };
 }
 
+export function sampleMomentumTransform(
+  wavefunction: SampledWavefunction,
+  parameters: SimulationParameters,
+  pMin: number,
+  pMax: number,
+  sampleCount: number,
+): MomentumWavefunction {
+  const count = Math.max(2, Math.floor(sampleCount));
+  const p = new Float64Array(count);
+  const re = new Float64Array(count);
+  const im = new Float64Array(count);
+  const density = new Float64Array(count);
+  const dp = (pMax - pMin) / Math.max(count - 1, 1);
+  const scale = wavefunction.dx / Math.sqrt(2 * Math.PI * parameters.hbar);
+  const x0 = wavefunction.x[0];
+
+  for (let sampleIndex = 0; sampleIndex < count; sampleIndex += 1) {
+    const momentum =
+      pMin + (sampleIndex / Math.max(count - 1, 1)) * (pMax - pMin);
+    const startAngle = -(momentum * x0) / parameters.hbar;
+    const stepAngle = -(momentum * wavefunction.dx) / parameters.hbar;
+    const stepRe = Math.cos(stepAngle);
+    const stepIm = Math.sin(stepAngle);
+    let basisRe = Math.cos(startAngle);
+    let basisIm = Math.sin(startAngle);
+    let sumRe = 0;
+    let sumIm = 0;
+
+    for (let index = 0; index < wavefunction.sampleCount; index += 1) {
+      const psiRe = wavefunction.re[index];
+      const psiIm = wavefunction.im[index];
+
+      sumRe += psiRe * basisRe - psiIm * basisIm;
+      sumIm += psiRe * basisIm + psiIm * basisRe;
+
+      const nextBasisRe = basisRe * stepRe - basisIm * stepIm;
+      const nextBasisIm = basisRe * stepIm + basisIm * stepRe;
+      basisRe = nextBasisRe;
+      basisIm = nextBasisIm;
+    }
+
+    p[sampleIndex] = momentum;
+    re[sampleIndex] = sumRe * scale;
+    im[sampleIndex] = sumIm * scale;
+    density[sampleIndex] = re[sampleIndex] ** 2 + im[sampleIndex] ** 2;
+  }
+
+  return {
+    p,
+    re,
+    im,
+    density,
+    dp,
+  };
+}
+
 export function inverseMomentumTransform(
   momentum: MomentumWavefunction,
   parameters: SimulationParameters,

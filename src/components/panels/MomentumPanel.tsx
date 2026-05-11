@@ -1,17 +1,28 @@
 import { useMemo } from 'react';
+import { sampleMomentumTransform } from '@/lib/math/fft';
 import { PanelFrame } from '@/components/panels/PanelFrame';
 import { PanelLegendCard } from '@/components/panels/PanelLegendCard';
 import { SignalCanvas } from '@/components/visualization/SignalCanvas';
-import type { MomentumWavefunction } from '@/types/quantum';
+import type {
+  MomentumWavefunction,
+  SampledWavefunction,
+  SimulationParameters,
+} from '@/types/quantum';
 
-function computeFocusedWindow(momentum: MomentumWavefunction): {
-  start: number;
-  end: number;
-} | undefined {
-  const { density } = momentum;
+function computeFocusedRange(momentum: MomentumWavefunction): {
+  pMin: number;
+  pMax: number;
+  focused: boolean;
+} {
+  const { density, p } = momentum;
+  const fullRange = {
+    pMin: p[0],
+    pMax: p[p.length - 1],
+    focused: false,
+  };
 
   if (density.length < 32) {
-    return undefined;
+    return fullRange;
   }
 
   let maxDensity = 0;
@@ -21,7 +32,7 @@ function computeFocusedWindow(momentum: MomentumWavefunction): {
   }
 
   if (maxDensity <= 1e-10) {
-    return undefined;
+    return fullRange;
   }
 
   const threshold = maxDensity * 0.012;
@@ -37,16 +48,20 @@ function computeFocusedWindow(momentum: MomentumWavefunction): {
   }
 
   if (left >= right) {
+    const centerIndex = Math.floor(density.length / 2);
+    const halfWidth = Math.max(4, Math.round(density.length * 0.12));
+
     return {
-      start: 0.4,
-      end: 0.6,
+      pMin: p[Math.max(0, centerIndex - halfWidth)],
+      pMax: p[Math.min(density.length - 1, centerIndex + halfWidth)],
+      focused: true,
     };
   }
 
   const activeWidth = right - left + 1;
 
   if (activeWidth > density.length * 0.72) {
-    return undefined;
+    return fullRange;
   }
 
   const margin = Math.max(
@@ -72,51 +87,66 @@ function computeFocusedWindow(momentum: MomentumWavefunction): {
   }
 
   return {
-    start: start / Math.max(density.length - 1, 1),
-    end: end / Math.max(density.length - 1, 1),
+    pMin: p[start],
+    pMax: p[end],
+    focused: true,
   };
 }
 
 interface MomentumPanelProps {
   momentum: MomentumWavefunction;
+  wavefunction: SampledWavefunction;
+  parameters: SimulationParameters;
   onOpenPhysicsHelp: () => void;
 }
 
 export function MomentumPanel({
   momentum,
+  wavefunction,
+  parameters,
   onOpenPhysicsHelp,
 }: MomentumPanelProps) {
-  const focusedWindow = useMemo(
-    () => computeFocusedWindow(momentum),
+  const focusedRange = useMemo(
+    () => computeFocusedRange(momentum),
     [momentum],
+  );
+  const displayMomentum = useMemo(
+    () =>
+      sampleMomentumTransform(
+        wavefunction,
+        parameters,
+        focusedRange.pMin,
+        focusedRange.pMax,
+        focusedRange.focused ? 384 : 320,
+      ),
+    [focusedRange, parameters, wavefunction],
   );
 
   return (
     <PanelFrame
       eyebrow="Momentum Space"
       title="Read the reciprocal answer"
-      description="This focused view shows the live Fourier partner of your drawing. When the position-space packet tightens, the momentum-space response usually spreads."
+      description="This high-resolution view shows the live Fourier partner of your drawing. When the position-space packet tightens, the momentum-space response usually spreads."
       badge="Live FFT"
       onOpenPhysicsHelp={onOpenPhysicsHelp}
     >
       <SignalCanvas
-        fillData={momentum.density}
+        fillData={displayMomentum.density}
         phaseData={undefined}
-        helperText="Focused transform"
+        helperText={focusedRange.focused ? 'Focused transform' : 'Full transform'}
         series={[
           {
-            data: momentum.re,
+            data: displayMomentum.re,
             color: '#ffc2b6',
             width: 2.2,
           },
           {
-            data: momentum.im,
+            data: displayMomentum.im,
             color: '#f2d198',
             width: 1.7,
             opacity: 0.86,
           },
         ]}
-        viewWindow={focusedWindow}
       />
 
       <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
