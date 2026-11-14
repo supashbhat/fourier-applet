@@ -185,7 +185,7 @@ body::after {
 .wg-intro__halo {
   width: 440px;
   height: 440px;
-  background: radial-gradient(circle, rgba(132, 193, 255, 0.16), transparent 72%);
+  background: radial-gradient(circle, rgba(255, 155, 146, 0.13), transparent 72%);
   filter: blur(6px);
   animation: haloPulse 4.5s ease-in-out infinite;
 }
@@ -193,8 +193,8 @@ body::after {
 .wg-intro__orb {
   width: 180px;
   height: 180px;
-  border: 1px solid rgba(126, 193, 255, 0.18);
-  box-shadow: inset 0 0 42px rgba(132, 199, 255, 0.15), 0 0 30px rgba(232, 196, 120, 0.16);
+  border: 1px solid rgba(255, 155, 146, 0.18);
+  box-shadow: inset 0 0 42px rgba(255, 155, 146, 0.11), 0 0 30px rgba(242, 209, 152, 0.12);
   animation: orbitSweep 2.9s cubic-bezier(0.25, 1, 0.3, 1) forwards;
 }
 
