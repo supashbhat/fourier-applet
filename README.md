@@ -26,11 +26,11 @@ This is not meant to be a general-purpose Schrödinger solver. The app is design
 ### Install and Run
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
-The dev server will print a local URL such as `http://127.0.0.1:4173/`.
+The dev server will print a local URL such as `http://localhost:5173/`.
 
 ### Useful Commands
 
@@ -75,7 +75,7 @@ npm run preview
 - `public/`
   Static assets such as the site icon.
 - `docs/`
-  Architecture notes, roadmap, visual direction, and physics assumptions.
+  The numerical assumptions and deployment notes.
 
 ## Physics Scope
 
@@ -91,7 +91,5 @@ For the exact assumptions used in the current build, see [docs/physics-assumptio
 
 ## Additional Docs
 
-- [Architecture](docs/architecture.md)
 - [Physics Assumptions](docs/physics-assumptions.md)
-- [Visual Design Spec](docs/visual-design-spec.md)
-- [Roadmap](docs/roadmap.md)
+- [Deployment](docs/deployment.md)

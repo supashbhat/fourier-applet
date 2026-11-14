@@ -27,7 +27,7 @@ The educational emphasis is Fourier duality, uncertainty, and conjugate represen
 
 ## Expected Structure
 
-- `docs/`: architecture, roadmap, design, physics, and deployment docs
+- `docs/`: numerical assumptions and deployment notes
 - `src/app/`: app shell and composition
 - `src/components/`: UI and panel components
 - `src/lib/math/`: wavefunction math, FFT, observables, evolution
