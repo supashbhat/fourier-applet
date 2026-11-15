@@ -135,10 +135,10 @@ body::after {
 }
 
 .brand-mark--compact {
-  width: 4rem;
-  height: 4rem;
-  flex-basis: 4rem;
-  border-radius: 1.25rem;
+  width: 5.65rem;
+  height: 5.65rem;
+  flex-basis: 5.65rem;
+  border-radius: 1.45rem;
 }
 
 .brand-mark--compact::before {

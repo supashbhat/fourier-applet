@@ -42,7 +42,7 @@ export function TopBar({
             <div className="brand-mark brand-mark--compact">
               <IcosaShellCanvas
                 variant="nav"
-                className="relative z-[1] h-12 w-12"
+                className="relative z-[1] h-full w-full"
               />
             </div>
             <div className="brand-copy">
